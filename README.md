@@ -211,6 +211,16 @@ You can open the log stream from your development machine.
 ```
 ![](./media/az-spring-cloud-logs.jpg)
 
+## Stream logs to Elastic
+
+You can stream the logs from your Spring Cloud App to Elastic by following the below steps:
+
+Create an EventHub and assciate the Spring Cloud App via the diagnostic settings
+Create a VM and install JDK and Logstash
+Configure Logstash via data pipelines to connect to Elastic Cloud
+Log into to Kibana dashaboard on your Elastic cloud to view logs from your Spring Cloud App
+
+
 ## Next Steps
 
 In this quickstart, you've deployed an existing Spring Boot application using Azure CLI. To learn more about Azure Spring Cloud, go to:
