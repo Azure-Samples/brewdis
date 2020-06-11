@@ -14,3 +14,10 @@
 **/.terraform/
 *.tfstate
 brewdis-ui/__tests__/artifacts/**
+infra/set-variables.sh
+infra/set-variables.sh
+infra/provider.tf
+infra/dev/main.tf
+infra/dev/provider.tf
+infra/dev/set-variables.sh
+infra/dev/variables.tf

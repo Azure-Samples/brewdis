@@ -1,0 +1,6 @@
+FeatureManagement:
+  beta:
+    EnabledFor:
+    - Name: browserFilter
+      Parameters:
+        browser: edge

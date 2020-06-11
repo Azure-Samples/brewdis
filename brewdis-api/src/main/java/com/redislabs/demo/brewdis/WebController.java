@@ -121,7 +121,7 @@ class WebController {
 		results.setPageSize(query.getPageSize());
 		results.setDuration(((float) (endTime - startTime)) / 1000);
 
-		boolean showAvailabilityCount = featureManager.isEnabledAsync("beta").block();
+		boolean showAvailabilityCount = featureManager.isEnabledAsync("featureManagement.beta").block();
 		results.setShowAvailabilityCount(showAvailabilityCount);
 		if (showAvailabilityCount) {
 			for (SearchResult<String, String> result : results.getResults()) {

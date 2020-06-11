@@ -62,6 +62,7 @@ jobs:
       BREWDIS_JAR: brewdis-api/build/libs/brewdis-api-1.0.0-SNAPSHOT.jar
       SPRING_REDIS_PORT: 10000
       STOMP_PORT: 80
+      CONFIG_STORE_ENDPOINT: https://brew-config.azconfig.io
 
     defaults:
       run:
@@ -112,4 +113,5 @@ jobs:
               SPRING_REDIS_PASSWORD=${{ steps.keyvaultaction.outputs.SPRING-REDIS-PASSWORD }} \
               SPRING_REDIS_PORT=$SPRING_REDIS_PORT \
               STOMP_HOST=${SPRING_CLOUD_SERVICE}-${SPRING_CLOUD_APP}.azuremicroservices.io \
-              STOMP_PORT=$STOMP_PORT
+              STOMP_PORT=$STOMP_PORT \
+              CONFIG_STORE_ENDPOINT=$CONFIG_STORE_ENDPOINT
