@@ -11,6 +11,8 @@ jobs:
       - uses: microsoft/playwright-github-action@v1
       - name: Install dependencies
         run: cd brewdis-ui && npm install
+      - name: Build Angular app
+        run: cd brewdis-ui && npm run build
       - name: Run Playwright tests
         run: cd brewdis-ui && npm run e2e
       - uses: actions/upload-artifact@v2

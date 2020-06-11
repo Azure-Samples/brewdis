@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "jest -o __tests__/e2e"
+    "e2e": "jest -o __tests__/e2e/index.spec.js"
   },
   "private": true,
   "dependencies": {

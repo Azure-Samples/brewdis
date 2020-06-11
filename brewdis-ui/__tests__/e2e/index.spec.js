@@ -1,19 +1,24 @@
+const { categories, products, availability } = require('./responses');
+
 describe('brewdis tests', () => {
-  jest.setTimeout(35 * 1000);
+  jest.setTimeout(40 * 1000);
   let page;
 
   beforeAll(async () => {
     await context.grantPermissions(['geolocation']);
-    await context.setGeolocation({latitude: 34.0522, longitude: -118.2437}); // Los Angeles
+    await context.setGeolocation({latitude: 49.283072, longitude: -123.14214399999997}); // Vancouver
+    await mock(context, /products/, products);
+    await mock(context, /categories/, categories);
+    await mock(context, /availability/, availability);
   });
 
   beforeEach(async() => {
     page = await context.newPage();
-    await page.goto('https://brewredis-spring-storefront.azuremicroservices.io/');
+    await page.goto('http://localhost:4200/');
   });
 
   it('should have correct title', async () => {
-    expect(await page.title()).toBe('Brewdis');
+    expect(await page.title()).toContain('Brewdis');
   });
 
   it('should be able to search', async () => {
@@ -33,9 +38,8 @@ describe('brewdis tests', () => {
   it('shows map', async () => {
     await Promise.all([
       page.click('text=Availability'),
-      page.waitForSelector('img[src="assets/store-low.svg"]')
+      page.waitForSelector('img[src="assets/store-high.svg"]')
     ]);
-    await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
     await screenshot(page, 'map.png');
   });
@@ -46,4 +50,14 @@ async function screenshot(page, path) {
     'safari' : browserName == 'chromium' ? 
     'edge' : browserName;
   return page.screenshot({ path: `__tests__/artifacts/${browser}-${path}` });
+}
+
+async function mock(context, filter, body) {
+  return context.route(filter, (route, request) => {
+    route.fulfill({
+      contentType: 'application/json',
+      status: 200,
+      body: JSON.stringify(body)
+    });
+  });
 }
