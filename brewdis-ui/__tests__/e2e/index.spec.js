@@ -31,7 +31,7 @@ describe('brewdis tests', () => {
       const images = document.querySelectorAll('mat-card img');
       return images && images.length && [...images].map(e => e.complete).every(Boolean);
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
     await screenshot(page, 'search.png');
   });
 
@@ -40,7 +40,7 @@ describe('brewdis tests', () => {
       page.click('text=Availability'),
       page.waitForSelector('img[src="assets/store-high.svg"]')
     ]);
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
     await screenshot(page, 'map.png');
   });
 })

@@ -16,6 +16,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     implementation 'com.microsoft.azure:spring-cloud-azure-feature-management-web:1.2.6'
+    implementation 'com.microsoft.azure:spring-cloud-azure-appconfiguration-config-web:1.2.6'
     implementation 'com.redislabs:spring-redisearch:1.12.1'
     implementation ('com.redislabs:riot:1.8.1') {
         exclude group: 'org.slf4j', module: 'slf4j-jdk14'
