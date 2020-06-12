@@ -1,4 +1,5 @@
 describe('brewdis tests', () => {
+  jest.setTimeout(35 * 1000);
   let page;
 
   beforeAll(async () => {
@@ -22,9 +23,11 @@ describe('brewdis tests', () => {
       page.waitForSelector('mat-card-title'),
     ]);
     await page.waitForFunction(() => {
-      return [...document.querySelectorAll('mat-card img')].map(e => e.complete).every(Boolean);
+      const images = document.querySelectorAll('mat-card img');
+      return images && images.length && [...images].map(e => e.complete).every(Boolean);
     });
-    await page.screenshot({ path: '__tests__/artifacts/search.png' });
+    await page.waitForTimeout(500);
+    await screenshot(page, 'search.png');
   });
 
   it('shows map', async () => {
@@ -32,6 +35,15 @@ describe('brewdis tests', () => {
       page.click('text=Availability'),
       page.waitForSelector('img[src="assets/store-low.svg"]')
     ]);
-    await page.screenshot({ path: '__tests__/artifacts/map.png' });
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(500);
+    await screenshot(page, 'map.png');
   });
 })
+
+async function screenshot(page, path) {
+  const browser = browserName == 'webkit' ? 
+    'safari' : browserName == 'chromium' ? 
+    'edge' : browserName;
+  return page.screenshot({ path: `__tests__/artifacts/${browser}-${path}` });
+}

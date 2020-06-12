@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 import com.microsoft.azure.spring.cloud.feature.manager.FeatureFilter;
 import com.microsoft.azure.spring.cloud.feature.manager.entities.FeatureFilterEvaluationContext;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component("BrowserFilter")
+@Slf4j
 public class BrowserFilter implements FeatureFilter {
     
     private static final String USERAGENT = "User-Agent";
@@ -39,6 +42,7 @@ public class BrowserFilter implements FeatureFilter {
     public boolean evaluate(FeatureFilterEvaluationContext context) {
         String userAgent = request.getHeader(USERAGENT);
         String browser = (String) context.getParameters().get(BROWSER);
+        log.error(userAgent + " - " + browser);
         if (userAgent.contains(EDGE_USERAGENT) && browser.equals(EDGE_BROWSER)) {
             return true;
         } else if (userAgent.contains(FIREFOX_USERAGENT) && browser.equals(FIREFOX_BROWSER)) {

@@ -120,7 +120,15 @@ class WebController {
 		results.setPageIndex(query.getPageIndex());
 		results.setPageSize(query.getPageSize());
 		results.setDuration(((float) (endTime - startTime)) / 1000);
-
+		
+		for (String feature : featureManager.getAllFeatureNames()) {
+			log.error("Feature: " + feature);
+		}
+		
+		boolean showAvailabilityCount = featureManager.isEnabledAsync("beta").block();
+		
+		log.error("Beta value: " + showAvailabilityCount);
+		
 		boolean showAvailabilityCount = featureManager.isEnabledAsync("beta").block();
 		results.setShowAvailabilityCount(showAvailabilityCount);
 		if (showAvailabilityCount) {

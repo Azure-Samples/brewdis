@@ -202,6 +202,46 @@ public class BrowserFilter implements FeatureFilter {
 
 Additional information on how to use Feature Flags can be found [here](https://docs.microsoft.com/azure/azure-app-configuration/use-feature-flags-spring-boot).
 
+### Feature Flags with Azure App Configuration
+
+In addition to managing Feature Flags from a config file, they also can be stored and updated from Azure App Configuration.
+
+1. Create a new Azure App Configuration store
+
+```azurecli
+az appconfig create -l ${REGION} -g ${RESOURCE_GROUP} --sku standard -n ${APP_NAME}-config
+```
+
+1. Create config store endpoint environment variable from the value given in the previous step
+
+```azurecli
+export CONFIG_STORE_ENDPOINT={YOUR_ENDPOINT_VALUE}
+```
+
+1. In the Azure Portal go to your Azure Spring Cloud instance, select Apps, your app, under Settings select Identity, then switch the Status toggle to On.
+
+1. In the Azure Portal go to your new App Configuration instance, select Access control (IAM), + Add, Add role assignment.
+
+    1. Select App Configuration Data Reader as the role
+
+    1. In select enter {Azure Spring Cloud resource name}/apps/{App Name}, example brewdis/apps/retail. Note: If no value is found close the side bar, wait a moment and reselect + Add, then Add role assignment.
+
+    1. Select Save.
+
+1. Upload the first Feature Flag from the CLI
+
+```azurecli
+az appconfig kv import -n ${APP_NAME}-config -s file --path data/featureflag.yml --format yaml
+```
+
+Your Feature Flag has now been added to Azure App Configuration. You can view it in the portal by going to your App Configuration instance, and selecting Feature manager. Here you will see a key beta, which is your feature flag and it currently has a state of conditional. If you right click on the row and select edit you will see the feature flag information.
+
+Here there is a list of feature filters, currently only browserFilter. Selecting the ... and selecting Edit parameters you will see the conditions used to trigger the feature flag. This is currently set to browser and edge. For this filter the valid values are; edge, chrome, and firefox.
+
+To modify the condition update the value column and select Apply in the Edit parameters pane, then Apply again in the edit pane.
+
+If your application is currently running, refreshing the page twice will allow the new feature flag to take effect. The first refresh is activity on the application to allow for a refresh to be triggered, the second one will update the page with the new feature flag. If no change happens this can be caused by the system cache of the feature flag value, by default this value is 30 seconds. Waiting 30 seconds and again twice refreshing the page will allow the value to be updated.
+
 ## Open logstream
 
 You can open the log stream from your development machine.
